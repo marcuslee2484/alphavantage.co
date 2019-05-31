@@ -3,21 +3,48 @@
 #https://www.alphavantage.co/documentation/
 
 import Execute
-       
+import pandas as pd
+from datetime import datetime
+
 if __name__ == "__main__":
     
-    ticker = input("Ticker:  ")
-    lookUpDt = input("Select date: (YYYY-MM-DD)  ")
+    ticker = ""#input("Ticker:  ")
+    lookUpDt = ""#input("Select date: (YYYY-MM-DD)  ")
     
     if not ticker:
         ticker = "MSFT"
     
     if not lookUpDt:
-        lookUpDt = '2019-01-18'
+        lookUpDt = str(datetime.today().strftime('%Y-%m-%d'))
         
     ticker = str(ticker.upper())
     lookUpDt = str(lookUpDt)
     
-    addr = r"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + ticker + "&apikey=demo"
+    runList =   [
+                "addr", 
+                "addrSMA", 
+                "addrEMA",
+                "addrWMA"
+                ]
+    runDict =   {
+                "addr": r"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + ticker + "&apikey=IW3YA0SC91DHOU9H", 
+                "addrSMA": r"https://www.alphavantage.co/query?function=SMA&symbol=" + ticker + "&interval=weekly&time_period=10&series_type=open&apikey=IW3YA0SC91DHOU9H",
+                "addrEMA": r"https://www.alphavantage.co/query?function=EMA&symbol=" + ticker + "&interval=weekly&time_period=10&series_type=open&apikey=IW3YA0SC91DHOU9H",
+                "addrWMA": r"https://www.alphavantage.co/query?function=WMA&symbol=" + ticker + "&interval=weekly&time_period=10&series_type=open&apikey=IW3YA0SC91DHOU9H"
+                }
+    dimDict =   {
+                "addr": "Time Series (Daily)", 
+                "addrSMA": "Technical Analysis: SMA",
+                "addrEMA": "Technical Analysis: EMA",
+                "addrWMA": "Technical Analysis: WMA"
+                }
     
-    Execute.main(addr, ticker, lookUpDt)
+    runListid = runList[0]
+    filterValue = runDict[runListid]
+    filterValuedim = dimDict[runListid]
+    
+    vl = Execute.main(filterValue, ticker, lookUpDt, filterValuedim)
+    
+    df = pd.DataFrame.from_dict(vl.PriceListx, orient='columns')
+    print(df)
+    

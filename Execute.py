@@ -1,5 +1,5 @@
 class main:
-    def __init__(self, addr, ticker, lookUpDt):
+    def __init__(self, addr, ticker, lookUpDt, filterValuedim):
     
         import PriceValueBreakDown
         import JsonMetaTimeSeries
@@ -9,12 +9,13 @@ class main:
         request = requests.get(addr)
         request2 = request.text
         request2 = json.loads(request2)
-        dimOut = JsonMetaTimeSeries.dimValue(request2)
+        dimOut = JsonMetaTimeSeries.dimValue(request2, filterValuedim)
         
         OutputMeta = dimOut.meta
-        OutputValue = dimOut.timeSeries
+        OutputValue = dimOut.output
         
-        PriceValueBreakDown.priceBreakDown(OutputMeta, OutputValue, lookUpDt)
+        PriceList = PriceValueBreakDown.priceBreakDown(OutputMeta, OutputValue, lookUpDt)
+        self.PriceListx = PriceList.OutputValuex
             
     def __repr__(self):
         return "Lookup Function"
