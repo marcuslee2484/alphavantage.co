@@ -27,7 +27,7 @@ if __name__ == "__main__":
                 "addrWMA"
                 ]
     runDict =   {
-                "addr": r"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + ticker + "&apikey=IW3YA0SC91DHOU9H", 
+                "addr": r"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + ticker + "&apikey=demo", 
                 "addrSMA": r"https://www.alphavantage.co/query?function=SMA&symbol=" + ticker + "&interval=weekly&time_period=10&series_type=open&apikey=demo",
                 "addrEMA": r"https://www.alphavantage.co/query?function=EMA&symbol=" + ticker + "&interval=weekly&time_period=10&series_type=open&apikey=demo",
                 "addrWMA": r"https://www.alphavantage.co/query?function=WMA&symbol=" + ticker + "&interval=weekly&time_period=10&series_type=open&apikey=demo"
